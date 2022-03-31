@@ -1,5 +1,11 @@
 // Initial Data
 
+let areas = {
+    a:null,
+    b:null,
+    c:null,
+}
+
 // Events
 
 document.querySelectorAll('.item').forEach(item => {
@@ -45,11 +51,10 @@ function dragLeave(e) {
 function dragDrop(e) {
     e.currentTarget.classList.remove('hover')
 
-   
-
     if(e.currentTarget.querySelector('.item') === null){
         let item = document.querySelector('.item.dragging')
         e.currentTarget.appendChild(item);
+        updateAreas();
     }
 
 }
@@ -69,4 +74,24 @@ function dragDropNeutral(e){
     e.currentTarget.classList.remove('hover')
     let item = document.querySelector('.item.dragging')
     e.currentTarget.appendChild(item);
+    updateAreas();
+}
+
+//logic function
+
+function updateAreas(){
+    document.querySelectorAll('.area').forEach(area => {
+        let name = area.getAttribute('data-name');
+
+        if(area.querySelector('.item') !== null){
+            areas[name] = area.querySelector('.item').innerHTML;
+        }else{
+            areas[name] = null;
+        }
+    })
+    if(areas.a === '1' && areas.b === '2' && areas.c === '3'){
+        document.querySelector('.areas').classList.add('correct');
+    }else{
+        document.querySelector('.areas').classList.remove('correct');
+    }
 }
